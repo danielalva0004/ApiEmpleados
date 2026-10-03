@@ -34,3 +34,9 @@
 /home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll
 /home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/bin/Debug/net10.0/Npgsql.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/bin/Debug/net10.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados/obj/Debug/net10.0/ApiEmpleados.sourcelink.json

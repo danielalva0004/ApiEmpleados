@@ -51,15 +51,34 @@ public class EmpleadosController : ControllerBase
         return Ok(respuesta);
     }
     
+    
     [HttpPost]
-    public IActionResult CrearEmpleado(Empleado empleado)
+    public IActionResult CrearEmpleado(CrearEmpleadoDto dto)
     {
+        var empleado = new Empleado
+        {
+            Id = empleados.Count + 1,
+
+            Nombre = dto.Nombre,
+            Cargo = dto.Cargo,
+
+            Salario = 0,
+            PasswordInterno = "valor-generado-por-backend"
+        };
+
         empleados.Add(empleado);
+
+        var response = new EmpleadoResponseDto
+        {
+            Id = empleado.Id,
+            Nombre = empleado.Nombre,
+            Cargo = empleado.Cargo
+        };
 
         return CreatedAtAction(
             nameof(ObtenerEmpleadoPorId),
             new { id = empleado.Id },
-            empleado
+            response
         );
     }
     

@@ -1,3 +1,6 @@
+using ApiEmpleados.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,8 +9,25 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<AppDbContext>(options => 
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("PostgreSQL")
+    )
+);
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    var conectado = await context.Database.CanConnectAsync();
+
+    Console.WriteLine(
+        conectado
+            ? "✅ Conexion a PostgreSQL exitosa"
+            : "❌ No se pudo conectar a PostgreSQL"
+    );
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
