@@ -1,5 +1,8 @@
-using ApiEmpleados.DTOs;
-using ApiEmpleados.Model;
+using ApiEmpleados.Application.DTOs;
+using ApiEmpleados.Application.Enums;
+using ApiEmpleados.Application.Interfaces.Services;
+
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiEmpleados.Controllers;
@@ -8,111 +11,74 @@ namespace ApiEmpleados.Controllers;
 [Route("api/[controller]")]
 public class EmpleadosController : ControllerBase
 {
-    private static readonly List<Empleado> empleados = new()
+    private readonly IEmpleadoService _services;
+
+    public EmpleadosController(IEmpleadoService service)
     {
-        new Empleado
-        {
-            Id = 1,
-            Nombre = "Laura",
-            Cargo = "Developer"
-        },
-        new Empleado
-        {
-            Id = 2,
-            Nombre = "Carlos",
-            Cargo = "Tester"
-        }
-    };
+        _services = service;
+    }
+
     [HttpGet]
-    public IActionResult ObtenerEmpleados()
+    public async Task<IActionResult> ObtenerEmpleados()
     {
+        
+        var empleados = await _services.ObtenerTodosAsync();
         
         return Ok(empleados);
     }
-    
-    
+
     [HttpGet("{id}")]
-    public IActionResult ObtenerEmpleadoPorId(int id)
+    public async Task<IActionResult> ObtenerEmpleadoPorId(int id)
     {
-        var empleado = empleados.FirstOrDefault(e => e.Id == id);
-
-        if (empleado == null)
-        {
-            return NotFound("Empleado no encontrado");
-        }
-
-        var respuesta = new EmpleadoResponseDto
-        {
-            Id = empleado.Id,
-            Nombre = empleado.Nombre,
-            Cargo = empleado.Cargo
-        };
-
-        return Ok(respuesta);
+        var empleado = await _services.ObtenerPorIdAsync(id);
+        
+        return Ok(empleado);
+        
     }
     
     
     [HttpPost]
-    public IActionResult CrearEmpleado(CrearEmpleadoDto dto)
+    public async Task<IActionResult> AgregarEmpleado(CrearEmpleadoDto dto)
     {
-        var empleado = new Empleado
-        {
-            Id = empleados.Count + 1,
-
-            Nombre = dto.Nombre,
-            Cargo = dto.Cargo,
-
-            Salario = 0,
-            PasswordInterno = "valor-generado-por-backend"
-        };
-
-        empleados.Add(empleado);
-
-        var response = new EmpleadoResponseDto
-        {
-            Id = empleado.Id,
-            Nombre = empleado.Nombre,
-            Cargo = empleado.Cargo
-        };
-
+        var empleado = await _services.AgregarAsync(dto);
+        
         return CreatedAtAction(
             nameof(ObtenerEmpleadoPorId),
             new { id = empleado.Id },
-            response
-        );
+            empleado);
+
     }
     
     [HttpPut("{id}")]
-    public IActionResult ActualizarEmpleado(
-        int id,
-        ActualizarEmpleadoDto dto)
+    public async Task<IActionResult> ActualizarEmpleado(int id, ActualizarEmpleadoDto dto)
     {
-        var empleado = empleados.FirstOrDefault(e => e.Id == id);
-
-        if (empleado == null)
+        var empleado = await _services.ActualizarEmpleadoAsync(id,dto);
+        
+        if (empleado == ActualizarEmpleadoResultado.NoEncontrado)
         {
             return NotFound();
         }
-
-        empleado.Nombre = dto.Nombre;
-        empleado.Cargo = dto.Cargo;
-
-        return Ok(empleado);
-    }
-    [HttpDelete("{id}")]
-    
-    public IActionResult EliminarEmpleado(int id)
-    {
-        var empleado = empleados.FirstOrDefault(e => e.Id == id);
-
-        if (empleado == null)
+        else if(empleado == ActualizarEmpleadoResultado.NombreDuplicado)
         {
-            return NotFound("Empleado no encontrado");
+            return Conflict("Ya existe otro empleado con ese nombre");
         }
-
-        empleados.Remove(empleado);
-
+        
         return NoContent();
     }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Eliminar(int id)
+    {
+        await _services.EliminarAsync(id);
+        
+        return NoContent();
+    }
+    
+    [HttpGet("error-inesperado")]
+    public IActionResult ErrorInesperado()
+    {
+        throw new InvalidOperationException("Fallo inesperado de prueba");
+    }
+    
     
 }

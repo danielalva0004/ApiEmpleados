@@ -1,0 +1,12 @@
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/bin/Debug/net10.0/ApiEmpleados.Domain.deps.json
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/bin/Debug/net10.0/ApiEmpleados.Domain.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/bin/Debug/net10.0/ApiEmpleados.Domain.pdb
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/ApiEmpleados.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/ApiEmpleados.Domain.AssemblyInfoInputs.cache
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/ApiEmpleados.Domain.AssemblyInfo.cs
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/ApiEmpleados.Domain.csproj.CoreCompileInputs.cache
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/ApiEmpleados.Domain.sourcelink.json
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/ApiEmpleados.Domain.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/refint/ApiEmpleados.Domain.dll
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/ApiEmpleados.Domain.pdb
+/home/Cohorte5/Escritorio/z_Daniel_Alvarez_net/src/ApiEmpleados/ApiEmpleados.Domain/obj/Debug/net10.0/ref/ApiEmpleados.Domain.dll
