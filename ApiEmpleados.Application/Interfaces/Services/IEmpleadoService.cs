@@ -10,7 +10,7 @@ public interface IEmpleadoService
     
     Task<EmpleadoResponseDto> ObtenerPorIdAsync(int id);
 
-    Task<EmpleadoResponseDto?> AgregarAsync(CrearEmpleadoDto dto);
+    Task<EmpleadoResponseDto> AgregarAsync(CrearEmpleadoDto dto);
 
     Task<ActualizarEmpleadoResultado> ActualizarEmpleadoAsync(
         int id,

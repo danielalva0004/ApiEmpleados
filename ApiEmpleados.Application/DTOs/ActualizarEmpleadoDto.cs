@@ -13,4 +13,6 @@ public class ActualizarEmpleadoDto
     [StringLength(100, MinimumLength = 2,
         ErrorMessage = "El cargo debe tener entre 2 y 100 caracteres")]
     public string Cargo { get; set; } = string.Empty;
+    
+    public int DepartamentoId { get; init; }
 }

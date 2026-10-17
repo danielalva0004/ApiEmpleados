@@ -1,7 +1,7 @@
 using ApiEmpleados.Application.Exceptions;
 using ApiEmpleados.Application.Interfaces.Repositories;
 using ApiEmpleados.Domain.Entities;
-using ApiEmpleados.Infrastructure.Persistence;
+
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -18,12 +18,12 @@ public class EmpleadoRepository : IEmpleadoRepository
 
     public async Task<List<Empleado>> ObtenerTodosAsync()
     {
-        return await _context.Empleados.ToListAsync();
+        return await _context.Empleados.Include(e => e.Departamento).ToListAsync();
     }
 
     public async Task<Empleado?> ObtenerPorIdAsync(int id)
     {
-        return await _context.Empleados
+        return await _context.Empleados.Include(e => e.Departamento)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 

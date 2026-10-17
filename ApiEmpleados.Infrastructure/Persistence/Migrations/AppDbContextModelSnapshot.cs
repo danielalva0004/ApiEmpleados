@@ -21,6 +21,23 @@ namespace ApiEmpleados.Infrastructure.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ApiEmpleados.Domain.Entities.Departamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Departamentos");
+                });
+
             modelBuilder.Entity("ApiEmpleados.Domain.Entities.Empleado", b =>
                 {
                     b.Property<int>("Id")
@@ -32,6 +49,9 @@ namespace ApiEmpleados.Infrastructure.Persistence.Migrations
                     b.Property<string>("Cargo")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -50,7 +70,25 @@ namespace ApiEmpleados.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartamentoId");
+
                     b.ToTable("Empleados");
+                });
+
+            modelBuilder.Entity("ApiEmpleados.Domain.Entities.Empleado", b =>
+                {
+                    b.HasOne("ApiEmpleados.Domain.Entities.Departamento", "Departamento")
+                        .WithMany("Empleados")
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Departamento");
+                });
+
+            modelBuilder.Entity("ApiEmpleados.Domain.Entities.Departamento", b =>
+                {
+                    b.Navigation("Empleados");
                 });
 #pragma warning restore 612, 618
         }

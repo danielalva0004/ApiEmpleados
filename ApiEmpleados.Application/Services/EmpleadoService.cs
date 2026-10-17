@@ -28,7 +28,10 @@ public class EmpleadoService : IEmpleadoService
             {
                 Id = empleado.Id,
                 Nombre = empleado.Nombre,
-                Cargo = empleado.Cargo
+                Cargo = empleado.Cargo,
+                DepartamentoId = empleado.DepartamentoId,
+                DepartamentoNombre = empleado.Departamento.Nombre
+                
             };
             dtos.Add(responseDto);
         }
@@ -48,48 +51,54 @@ public class EmpleadoService : IEmpleadoService
         {
             Id = empleado.Id,
             Nombre = empleado.Nombre,
-            Cargo = empleado.Cargo 
+            Cargo = empleado.Cargo,
+            DepartamentoId = empleado.DepartamentoId,
+            DepartamentoNombre = empleado.Departamento.Nombre
         };
         
         return responseDto;
     
     }
     
-    public async Task<EmpleadoResponseDto?> AgregarAsync(CrearEmpleadoDto dto)
+    public async Task<EmpleadoResponseDto> AgregarAsync(CrearEmpleadoDto dto)
     {
+        var validation = await _repository.ExistePorNombreAsync(dto.Nombre);
 
-        // var validation = await _repository.ExistePorNombreAsync(dto.Nombre);
-        // if (validation)
-        // {
-        //     throw new NombreEmpleadoDuplicadoException(dto.Nombre);
-        // }
-        
-        // 1. convertir dto → Empleado
+        if (validation)
+        {
+            throw new NombreEmpleadoDuplicadoException(dto.Nombre);
+        }
+
         Empleado empleado = new Empleado
         {
             Nombre = dto.Nombre.Trim(),
-            Cargo = dto.Cargo.Trim()
+            Cargo = dto.Cargo.Trim(),
+            DepartamentoId = dto.DepartamentoId
         };
-        
-        // 2. _repository.AgregarAsync(...)
+
         await _repository.AgregarAsync(empleado);
 
-        // 3. _repository.GuardarCambiosAsync()
         await _repository.GuardarCambiosAsync();
 
-        // 4. responde al cliente
+        var empleadoCreado =
+            await _repository.ObtenerPorIdAsync(empleado.Id);
+
+        if (empleadoCreado == null)
+        {
+            throw new EmpleadoNoEncontradoException(empleado.Id);
+        }
+
         EmpleadoResponseDto responseDto = new EmpleadoResponseDto
         {
-            Id = empleado.Id,
-            Nombre = empleado.Nombre,
-            Cargo = empleado.Cargo
+            Id = empleadoCreado.Id,
+            Nombre = empleadoCreado.Nombre,
+            Cargo = empleadoCreado.Cargo,
+            DepartamentoId = empleadoCreado.DepartamentoId,
+            DepartamentoNombre = empleadoCreado.Departamento.Nombre
         };
 
-
-        return  responseDto;
-
+        return responseDto;
     }
-    
     public async Task<ActualizarEmpleadoResultado> ActualizarEmpleadoAsync(
         int id,
         ActualizarEmpleadoDto dto)
@@ -109,6 +118,7 @@ public class EmpleadoService : IEmpleadoService
 
         empleado.Nombre = dto.Nombre.Trim();
         empleado.Cargo = dto.Cargo.Trim();
+        empleado.DepartamentoId = dto.DepartamentoId;
 
         await _repository.GuardarCambiosAsync();
 
